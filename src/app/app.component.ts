@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { AlbumService } from './album.service';
+import {AuthenticationService} from "./services/authentication.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -9,45 +11,13 @@ import { AlbumService } from './album.service';
 export class AppComponent {
   title = 'a6-frontend';
 
+  constructor(public authService: AuthenticationService, private router: Router) {
 
-  // albumList = [
-  //   {
-  //     name: 'album1',
-  //     id : '01',
-  //     createdBy: 'me',
-  //     coverPhotoUrl: 'photo1',
-  //     dateCreated: 'now1'
-  //   },
-  //   {
-  //     name: 'album2',
-  //     id : '02',
-  //     createdBy: 'me',
-  //     coverPhotoUrl: 'photo2',
-  //     dateCreated: 'now2'
-  //   }
-  // ]
+  }
 
-  albumList:any;
-
-   constructor (public albumService: AlbumService){
-    
-   }
-
-   ngOnInit(): void{
-
-    this.getAllAlbums();
-
-   }
-   
-   getAllAlbums(){
-     this.albumService.getAllAlbums().subscribe(
-       (res)=> {
-         this.albumList = res;
-       },
-       (error) => {
-         console.log(error);
-       }
-     );
-   }
-
+  logout() {
+    this.authService.logout().subscribe(() => {
+      this.router.navigate(['']);
+    })
+  }
 }

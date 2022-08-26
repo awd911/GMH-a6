@@ -303,15 +303,32 @@
 
 </div>
 
-<span><h1>Welcome</h1></span>
-<div class="spacer"></div>
-<h2>List of Albums:</h2>
-<ul>
-  <li *ngFor="let album of albumList">
-    <h3>{{album.name}}</h3>
-    <h4>Date Created: {{album.id}}</h4>
+<mat-toolbar color="primary">
+  Sign-up Flow with Firebase
 
-  </li>
-</ul>
+  <ng-container *ngIf="authService.currentUser$ | async as user; else loginButton">
+    <button mat-button [matMenuTriggerFor]="userMenu">
+      <mat-icon>account_circle</mat-icon>
+      {{user.displayName}}
+      <mat-icon>expand_more</mat-icon>
+    </button>
+  </ng-container>
 
-<router-outlet></router-outlet>
+  <ng-template #loginButton>
+    <button mat-button routerLink="./login">
+      <mat-icon>login</mat-icon>
+      Login
+    </button>
+  </ng-template>
+
+</mat-toolbar>
+
+<div class="content">
+  <router-outlet></router-outlet>
+</div>
+
+<mat-menu #userMenu="matMenu">
+
+  <button mat-menu-item (click)="logout()">Logout</button>
+
+</mat-menu>
