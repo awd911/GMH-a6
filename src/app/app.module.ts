@@ -19,6 +19,9 @@ import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { HotToastModule } from '@ngneat/hot-toast';
 import {MatMenuModule} from "@angular/material/menu";
+import { AngularFireModule } from '@angular/fire/compat';
+import {AngularFireDatabase, AngularFireDatabaseModule} from "@angular/fire/compat/database";
+
 
 @NgModule({
   declarations: [
@@ -42,9 +45,14 @@ import {MatMenuModule} from "@angular/material/menu";
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     HotToastModule.forRoot(),
-    MatMenuModule
+    MatMenuModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule
   ],
-  providers: [],
+  providers: [
+    AngularFireDatabase
+    // FireserviceService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
